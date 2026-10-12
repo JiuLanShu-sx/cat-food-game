@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#222831" />
+  <title>你给我吃的什么？！</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell" id="gameShell" aria-label="你给我吃的什么游戏">
+    <header class="hud">
+      <div class="score-card"><span>本局</span><strong id="score">0</strong></div>
+      <div class="hud-right">
+        <div class="score-card best-card"><span>最高</span><strong id="bestScore">0</strong></div>
+        <button class="pause-button" id="pauseButton" type="button" aria-label="暂停游戏">Ⅱ</button>
+      </div>
+    </header>
+
+    <section class="game-area" id="gameArea" aria-label="游戏区域">
+      <img class="track-art" src="assets/track_y.png" alt="" aria-hidden="true" />
+      <div class="items-layer" id="itemsLayer"></div>
+      <div class="junction-feedback" id="junctionFeedback" aria-hidden="true"></div>
+
+      <div class="cat-swipe at-left" id="catSwipe" aria-label="猫咪分流机关"></div>
+
+      <div class="exit-zone eat-zone" aria-hidden="true">
+        <div class="food-bowl"><i>🐟</i></div><span>吃</span>
+      </div>
+      <div class="exit-zone no-zone" aria-hidden="true">
+        <div class="trash-bin"><i></i></div><span>不吃</span>
+      </div>
+    </section>
+
+    <p class="tip" id="tip">
+      <span class="tip-rules"><b>好吃的 → 左爪</b><b>不好吃 → 右爪</b></span>
+      <small>点击屏幕切换猫爪</small>
+    </p>
+
+    <div class="overlay intro-overlay visible" id="startOverlay">
+      <div class="dialog intro-dialog">
+        <p class="eyebrow">猫猫挑食审查中</p>
+        <h1>你给我吃的什么？！</h1>
+        <p class="intro-copy">猫爪出击，别喂错啦！</p>
+        <div class="intro-cat-stage" aria-hidden="true">
+          <div class="intro-cat"></div>
+        </div>
+        <p class="intro-rule">左右挥爪，帮猫猫挑选食物</p>
+        <button class="primary-button" id="startButton" type="button">开始游戏</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="gameOverOverlay" aria-hidden="true">
+      <div class="dialog">
+        <p class="failure-mark">×</p>
+        <h2>你给我吃的什么？！</h2>
+        <p class="result-line">本局：<strong id="finalScore">0</strong></p>
+        <p class="result-line">最高纪录：<strong id="finalBestScore">0</strong></p>
+        <button class="primary-button" id="reviveButton" type="button">看广告继续</button>
+        <button class="secondary-button" id="restartButton" type="button">重新开始</button>
+      </div>
+    </div>
+
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <div class="prepare-message" id="prepareMessage">准备！</div>
+    <div class="pause-overlay" id="pauseOverlay" aria-hidden="true">
+      <div class="pause-card"><span>爪爪歇一下</span><strong>已暂停</strong><button id="resumeButton" type="button">继续游戏</button></div>
+    </div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
