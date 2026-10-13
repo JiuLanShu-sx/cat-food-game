@@ -88,8 +88,9 @@ const TUTORIAL_ITEMS = [
   { image: "assets/runtime/items/plastic_bag.webp", name: "垃圾", answer: "no", size: 122 }
 ];
 
-// Every sound effect gets its own Audio instance so rapid consecutive actions never
-// cut off a previous effect. Missing files only fail silently and never block gameplay.
+// Keep BGM and sound effects on dedicated media elements. On some mobile browsers,
+// creating a new Audio element inside a tap handler can steal the BGM media channel.
+// Reusing these independent players avoids that audio-focus interruption.
 class AudioManager {
   constructor(config) {
     this.config = config;
@@ -97,8 +98,9 @@ class AudioManager {
     this.unlocked = false;
     this.bgm = null;
     this.bgmWanted = false;
-    this.activeEffects = new Set();
-    this.replaceOnReplay = new Map();
+    this.pausedByGame = false;
+    this.effectPlayers = new Map();
+    this.switchRecoveryTimer = 0;
   }
 
   getVolume(type) {
@@ -108,6 +110,25 @@ class AudioManager {
 
   unlock() {
     this.unlocked = true;
+    this.ensurePlayers();
+  }
+
+  createPlayer(source, loop = false) {
+    const player = new Audio(source);
+    player.preload = "auto";
+    player.loop = loop;
+    player.setAttribute("playsinline", "");
+    return player;
+  }
+
+  ensurePlayers() {
+    if (!this.bgm && this.config.files.bgm) {
+      this.bgm = this.createPlayer(this.config.files.bgm, true);
+    }
+    Object.entries(this.config.files).forEach(([name, source]) => {
+      if (name === "bgm" || !source || this.effectPlayers.has(name)) return;
+      this.effectPlayers.set(name, this.createPlayer(source));
+    });
   }
 
   setEnabled(enabled) {
@@ -120,61 +141,55 @@ class AudioManager {
   }
 
   playEffect(name) {
-    const source = this.config.files[name];
-    if (!this.enabled || !this.unlocked || !source) return;
-    // Fast back-and-forth paw taps should sound crisp, not stack into a long whoosh.
-    this.stopReplacedEffect(name);
-    const effect = new Audio(source);
-    effect.preload = "auto";
-    effect.volume = this.getVolume("sfx");
-    this.activeEffects.add(effect);
-    if (name === "switch") this.replaceOnReplay.set(name, effect);
-    const dispose = () => {
-      this.activeEffects.delete(effect);
-      if (this.replaceOnReplay.get(name) === effect) this.replaceOnReplay.delete(name);
-    };
-    effect.addEventListener("ended", dispose, { once: true });
-    effect.addEventListener("error", dispose, { once: true });
-    const playback = effect.play();
-    if (playback) playback.catch(dispose);
-  }
-
-  stopReplacedEffect(name) {
-    const previous = this.replaceOnReplay.get(name);
-    if (!previous) return;
-    previous.pause();
+    if (!this.enabled || !this.unlocked) return;
+    this.ensurePlayers();
+    const effect = this.effectPlayers.get(name);
+    if (!effect) return;
+    // A rapid back-and-forth swipe restarts the same short player instead of stacking.
+    effect.pause();
     try {
-      previous.currentTime = 0;
+      effect.currentTime = 0;
     } catch {
-      // It is safe if a browser rejects seeking an unfinished or missing file.
+      // It is safe if a browser rejects seeking a not-yet-buffered effect.
     }
-    this.activeEffects.delete(previous);
-    this.replaceOnReplay.delete(name);
+    effect.volume = this.getVolume("sfx");
+    const playback = effect.play();
+    if (playback) playback.catch(() => {});
+
+    // iOS/Android WebViews can pause background media when a short effect begins.
+    // Never revive audio after a deliberate pause or Game Over.
+    if (name === "switch") {
+      const recover = () => this.recoverBgm();
+      effect.onended = recover;
+      window.clearTimeout(this.switchRecoveryTimer);
+      this.switchRecoveryTimer = window.setTimeout(recover, 160);
+    }
   }
 
   startBgm() {
     this.bgmWanted = true;
+    this.pausedByGame = false;
     if (!this.enabled || !this.unlocked) return;
-    if (!this.bgm) {
-      this.bgm = new Audio(this.config.files.bgm);
-      this.bgm.loop = true;
-      this.bgm.preload = "auto";
-    }
+    this.ensurePlayers();
+    if (!this.bgm) return;
     this.bgm.volume = this.getVolume("bgm");
     const playback = this.bgm.play();
     if (playback) playback.catch(() => {});
   }
 
   pauseBgm() {
+    this.pausedByGame = true;
     if (this.bgm) this.bgm.pause();
   }
 
   resumeBgm() {
-    if (this.bgmWanted) this.startBgm();
+    this.pausedByGame = false;
+    this.recoverBgm();
   }
 
   stopBgm() {
     this.bgmWanted = false;
+    this.pausedByGame = true;
     if (!this.bgm) return;
     this.bgm.pause();
     try {
@@ -182,6 +197,15 @@ class AudioManager {
     } catch {
       // Some browsers reject seeking an unavailable source; it is safe to ignore.
     }
+  }
+
+  recoverBgm() {
+    if (!this.bgmWanted || this.pausedByGame || !this.enabled || !this.unlocked) return;
+    this.ensurePlayers();
+    if (!this.bgm || !this.bgm.paused) return;
+    this.bgm.volume = this.getVolume("bgm");
+    const playback = this.bgm.play();
+    if (playback) playback.catch(() => {});
   }
 }
 
