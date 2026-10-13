@@ -28,7 +28,9 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html style.css game.js _site/
-          cp -R assets _site/assets
+          mkdir -p _site/assets
+          cp -R assets/runtime _site/assets/runtime
+          cp -R assets/audio _site/assets/audio
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

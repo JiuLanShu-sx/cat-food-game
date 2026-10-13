@@ -35,7 +35,7 @@ const CONFIG = {
   prepareDuration: 1000,
   feedbackDuration: 550,
   tutorialIntroDuration: 2000,
-  catSwipeImage: "assets/cat_swipe.png",    // LEFT in left half, RIGHT in right half
+  catSwipeImage: "assets/runtime/cat_swipe.webp",    // LEFT in left half, RIGHT in right half
   middleItemUnlockScore: 11,  // score 0–10: the clearest starter items
   fullItemUnlockScore: 26,    // score 26+: all 18 item illustrations are available
   audio: {
@@ -57,35 +57,35 @@ const CONFIG = {
 // Add or replace item illustrations here. `answer` is either "eat" or "no".
 // tier: 0 is available at the start, 1 at 11 points, and 2 at 26 points.
 const ITEMS = [
-  { image: "assets/items/fish.png", name: "小鱼", answer: "eat", tier: 0, size: 70 },
-  { image: "assets/items/chicken.png", name: "鸡肉", answer: "eat", tier: 0, size: 63 },
-  { image: "assets/items/beef.png", name: "牛肉", answer: "eat", tier: 0, size: 65 },
-  { image: "assets/items/shrimp.png", name: "熟虾", answer: "eat", tier: 0, size: 68 },
-  { image: "assets/items/salmon.png", name: "三文鱼", answer: "eat", tier: 0, size: 66 },
-  { image: "assets/items/egg.png", name: "熟鸡蛋", answer: "eat", tier: 0, size: 63 },
-  { image: "assets/items/dried-fish.png", name: "小鱼干", answer: "eat", tier: 0, size: 71 },
-  { image: "assets/items/cat-can.png", name: "猫罐头", answer: "eat", tier: 0, size: 59 },
-  { image: "assets/items/duck-meat.png", name: "鸭肉", answer: "eat", tier: 1, size: 64 },
-  { image: "assets/items/cod.png", name: "鳕鱼块", answer: "eat", tier: 1, size: 65 },
-  { image: "assets/items/cat-puree.png", name: "猫用肉泥", answer: "eat", tier: 1, size: 63 },
-  { image: "assets/items/chocolate.png", name: "巧克力", answer: "no", tier: 0, size: 64 },
-  { image: "assets/items/onion.png", name: "洋葱", answer: "no", tier: 0, size: 63 },
-  { image: "assets/items/garlic.png", name: "大蒜", answer: "no", tier: 0, size: 63 },
-  { image: "assets/items/grapes.png", name: "葡萄", answer: "no", tier: 1, size: 59 },
-  { image: "assets/items/coffee.png", name: "咖啡", answer: "no", tier: 1, size: 64 },
-  { image: "assets/items/chili.png", name: "辣椒", answer: "no", tier: 1, size: 71 },
-  { image: "assets/items/yarn.png", name: "毛线球", answer: "no", tier: 0, size: 66 },
-  { image: "assets/items/rubber-duck.png", name: "橡皮鸭", answer: "no", tier: 1, size: 65 },
-  { image: "assets/items/feather.png", name: "羽毛", answer: "no", tier: 1, size: 66 },
-  { image: "assets/items/bell.png", name: "铃铛", answer: "no", tier: 1, size: 64 },
-  { image: "assets/items/shuttlecock.png", name: "羽毛球", answer: "no", tier: 2, size: 77 },
-  { image: "assets/items/playing-cards.png", name: "扑克牌", answer: "no", tier: 2, size: 75 }
+  { image: "assets/runtime/items/fish.webp", name: "小鱼", answer: "eat", tier: 0, size: 70 },
+  { image: "assets/runtime/items/chicken.webp", name: "鸡肉", answer: "eat", tier: 0, size: 63 },
+  { image: "assets/runtime/items/beef.webp", name: "牛肉", answer: "eat", tier: 0, size: 65 },
+  { image: "assets/runtime/items/shrimp.webp", name: "熟虾", answer: "eat", tier: 0, size: 68 },
+  { image: "assets/runtime/items/salmon.webp", name: "三文鱼", answer: "eat", tier: 0, size: 66 },
+  { image: "assets/runtime/items/egg.webp", name: "熟鸡蛋", answer: "eat", tier: 0, size: 63 },
+  { image: "assets/runtime/items/dried-fish.webp", name: "小鱼干", answer: "eat", tier: 0, size: 71 },
+  { image: "assets/runtime/items/cat-can.webp", name: "猫罐头", answer: "eat", tier: 0, size: 59 },
+  { image: "assets/runtime/items/duck-meat.webp", name: "鸭肉", answer: "eat", tier: 1, size: 64 },
+  { image: "assets/runtime/items/cod.webp", name: "鳕鱼块", answer: "eat", tier: 1, size: 65 },
+  { image: "assets/runtime/items/cat-puree.webp", name: "猫用肉泥", answer: "eat", tier: 1, size: 63 },
+  { image: "assets/runtime/items/chocolate.webp", name: "巧克力", answer: "no", tier: 0, size: 64 },
+  { image: "assets/runtime/items/onion.webp", name: "洋葱", answer: "no", tier: 0, size: 63 },
+  { image: "assets/runtime/items/garlic.webp", name: "大蒜", answer: "no", tier: 0, size: 63 },
+  { image: "assets/runtime/items/grapes.webp", name: "葡萄", answer: "no", tier: 1, size: 59 },
+  { image: "assets/runtime/items/coffee.webp", name: "咖啡", answer: "no", tier: 1, size: 64 },
+  { image: "assets/runtime/items/chili.webp", name: "辣椒", answer: "no", tier: 1, size: 71 },
+  { image: "assets/runtime/items/yarn.webp", name: "毛线球", answer: "no", tier: 0, size: 66 },
+  { image: "assets/runtime/items/rubber-duck.webp", name: "橡皮鸭", answer: "no", tier: 1, size: 65 },
+  { image: "assets/runtime/items/feather.webp", name: "羽毛", answer: "no", tier: 1, size: 66 },
+  { image: "assets/runtime/items/bell.webp", name: "铃铛", answer: "no", tier: 1, size: 64 },
+  { image: "assets/runtime/items/shuttlecock.webp", name: "羽毛球", answer: "no", tier: 2, size: 77 },
+  { image: "assets/runtime/items/playing-cards.webp", name: "扑克牌", answer: "no", tier: 2, size: 75 }
 ];
 
 // These two illustrations are onboarding-only. They never join the random item pool.
 const TUTORIAL_ITEMS = [
-  { image: "assets/items/cat_food.png", name: "猫粮", answer: "eat", size: 122 },
-  { image: "assets/items/plastic_bag.png", name: "垃圾", answer: "no", size: 122 }
+  { image: "assets/runtime/items/cat_food.webp", name: "猫粮", answer: "eat", size: 122 },
+  { image: "assets/runtime/items/plastic_bag.webp", name: "垃圾", answer: "no", size: 122 }
 ];
 
 // Every sound effect gets its own Audio instance so rapid consecutive actions never
@@ -218,7 +218,8 @@ const el = {
   reviveButton: document.querySelector("#reviveButton"),
   restartButton: document.querySelector("#restartButton"),
   feedback: document.querySelector("#feedback"),
-  prepareMessage: document.querySelector("#prepareMessage")
+  prepareMessage: document.querySelector("#prepareMessage"),
+  loadingScreen: document.querySelector("#loadingScreen")
 };
 
 const state = {
@@ -265,6 +266,41 @@ function updateHud() {
 
 function setupCatSwipeArt() {
   el.catSwipe.style.setProperty("--cat-swipe-image", `url("${CONFIG.catSwipeImage}")`);
+}
+
+// These visual assets are requested in parallel before the title screen becomes
+// interactive. Game-state setup and gameplay timing remain completely separate.
+const CRITICAL_VISUAL_ASSETS = [
+  "assets/runtime/background.webp",
+  "assets/runtime/track_y.webp",
+  CONFIG.catSwipeImage,
+  "assets/runtime/bowl_eat.webp",
+  "assets/runtime/bin_trash.webp"
+];
+
+function preloadImage(source) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.onload = resolve;
+    image.onerror = resolve;
+    image.src = source;
+    if (image.complete) resolve();
+  });
+}
+
+function prepareVisuals() {
+  const assetsReady = Promise.all(CRITICAL_VISUAL_ASSETS.map(preloadImage));
+  const safetyTimeout = new Promise((resolve) => window.setTimeout(resolve, 6000));
+  Promise.race([assetsReady, safetyTimeout]).then(() => {
+    el.loadingScreen.classList.add("hidden");
+    window.setTimeout(() => el.loadingScreen.remove(), 260);
+    // The first game round only draws from tier 0. Warm those small illustrations
+    // after the title art is ready so the first falling item is never delayed.
+    window.setTimeout(() => {
+      ITEMS.filter((item) => item.tier === 0).forEach((item) => preloadImage(item.image));
+      TUTORIAL_ITEMS.forEach((item) => preloadImage(item.image));
+    }, 0);
+  });
 }
 
 function updateDirection() {
@@ -664,6 +700,7 @@ updateHud();
 setupCatSwipeArt();
 updateDirection();
 syncTrackGeometry();
+prepareVisuals();
 window.addEventListener("resize", syncTrackGeometry);
 state.lastTime = performance.now();
 state.rafId = requestAnimationFrame(gameLoop);
